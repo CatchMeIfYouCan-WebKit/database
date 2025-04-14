@@ -16,9 +16,10 @@ CREATE TABLE problems (
     explanation TEXT,                      -- 해설
     tag_name VARCHAR(100) NOT NULL,        -- 문제 생성 시 정해진 태그명 (예: "컴퓨터네트워크")
     chapter_title VARCHAR(255) NOT NULL,   -- 문제 생성 시 정해진 챕터명 (예: "네트워크 기초")
-    difficulty INT NOT NULL,               -- 난이도 (예: 1 ~ 5)
+    difficulty VARCHAR(50) NOT NULL,               -- 난이도 (예: 하 ~ 상)
     type VARCHAR(50) DEFAULT 'tag',        -- 문제 유형: 'tag'(기본 문제) 또는 'wrong_chapter'(오답 기반 문제)
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    url VARCHAR(255) 
 );
 
 -- 3. 사용자 문제 풀이 기록 테이블
