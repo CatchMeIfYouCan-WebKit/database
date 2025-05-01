@@ -74,7 +74,7 @@ CREATE TABLE `pet` (
   `user_id` INT NOT NULL,
   `photo_path` VARCHAR(500) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
-  `species` VARCHAR(50) NOT NULL,
+  `breed` VARCHAR(50) NOT NULL,
   `coat_color` VARCHAR(50),
   `is_neutered` TINYINT(1) NOT NULL DEFAULT 0,
   `date_of_birth` DATE NOT NULL,
