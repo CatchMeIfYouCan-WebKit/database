@@ -111,7 +111,6 @@ CREATE TABLE `adopt_posts` (
   `title` VARCHAR(200) NOT NULL,
   `is_vet_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `comments` TEXT,
-  `adopt_datetime` DATETIME NOT NULL, --작성 시간
   `adopt_location` VARCHAR(255) NOT NULL, -- 입양 지역
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
