@@ -128,3 +128,18 @@ CREATE TABLE `animal_hospitals` (
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='동물병원 정보';
+
+--8. missing_post_comments(실종 / 목격 게시글 댓글)
+CREATE TABLE `missing_post_comments` (
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `post_id` BIGINT NOT NULL COMMENT '실종/목격 게시글 ID',
+  `user_id` INT NOT NULL COMMENT '작성자 ID',
+  `parent_comment_id` BIGINT DEFAULT NULL COMMENT '부모 댓글 ID (NULL이면 원댓글)',
+  `content` TEXT NOT NULL COMMENT '댓글 내용',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`post_id`) REFERENCES `missing_posts`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`parent_comment_id`) REFERENCES `missing_post_comments`(`id`) ON DELETE CASCADE
+);
+
