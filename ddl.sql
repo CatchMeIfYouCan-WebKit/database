@@ -76,6 +76,7 @@ CREATE TABLE `pet` (
   `name` VARCHAR(50) NOT NULL,
   `breed` VARCHAR(50) NOT NULL,
   `coat_color` VARCHAR(50),
+  `gender` varchar(10) DEFAULT NULL,
   `is_neutered` TINYINT(1) NOT NULL DEFAULT 0,
   `date_of_birth` DATE NOT NULL,
   `age` INT,
