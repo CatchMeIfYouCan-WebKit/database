@@ -91,7 +91,7 @@ CREATE TABLE `pet` (
 CREATE TABLE `missing_posts` (
   `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
-  `pet_id` INT NOT NULL,
+  `pet_id` INT DEFAULT NULL,
   `post_type` ENUM('missing','witness') NOT NULL DEFAULT 'missing',
   `photo_url` VARCHAR(255),
   `missing_datetime` DATETIME NOT NULL,
