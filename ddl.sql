@@ -97,7 +97,6 @@ CREATE TABLE `missing_posts` (
   `missing_datetime` DATETIME NOT NULL,
   `missing_location` VARCHAR(255) NOT NULL,
   `detail_description` TEXT,
-  `comments` TEXT,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
