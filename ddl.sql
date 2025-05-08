@@ -143,3 +143,40 @@ CREATE TABLE `missing_post_comments` (
   FOREIGN KEY (`parent_comment_id`) REFERENCES `missing_post_comments`(`id`) ON DELETE CASCADE
 );
 
+--9. 채팅방 정보 테이블
+CREATE TABLE chat_rooms (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user1_id INT NOT NULL,  -- 채팅 참여자 A
+  user2_id INT NOT NULL,  -- 채팅 참여자 B
+  type ENUM('ADOPTION', 'VET') NOT NULL,  -- 채팅 용도
+  related_id BIGINT NOT NULL,  -- ADOPTION: adopt_posts.id / VET: vet_appointments.id
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_chat (user1_id, user2_id, type, related_id),
+  FOREIGN KEY (user1_id) REFERENCES users(id),
+  FOREIGN KEY (user2_id) REFERENCES users(id)
+);
+
+--10. 채팅 메세지 저장 테이블 
+CREATE TABLE chat_messages (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  room_id BIGINT NOT NULL,
+  sender_id INT NOT NULL,
+  message TEXT NOT NULL,
+  sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (room_id) REFERENCES chat_rooms(id),
+  FOREIGN KEY (sender_id) REFERENCES users(id)
+);
+--11. 진료 얘약 정보 테이블
+CREATE TABLE vet_appointments (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,         -- 보호자
+  vet_user_id INT NOT NULL,     -- 수의사
+  pet_id INT NOT NULL,
+  appointment_time DATETIME NOT NULL,
+  status ENUM('WAITING', 'ONGOING', 'COMPLETED') DEFAULT 'WAITING',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (vet_user_id) REFERENCES users(id),
+  FOREIGN KEY (pet_id) REFERENCES pet(id)
+);
+
