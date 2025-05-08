@@ -81,7 +81,7 @@ CREATE TABLE `pet` (
   `date_of_birth` DATE NOT NULL,
   `age` INT,
   `weight` DECIMAL(5,2),
-  `registration_number` VARCHAR(100) NOT NULL UNIQUE,
+  `registration_number` VARCHAR(100) DEFAULT NULL UNIQUE,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
