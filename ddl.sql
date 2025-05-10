@@ -93,7 +93,7 @@ CREATE TABLE `missing_posts` (
   `user_id` INT NOT NULL,
   `pet_id` INT DEFAULT NULL,
   `post_type` ENUM('missing','witness') NOT NULL DEFAULT 'missing',
-  `photo_url` VARCHAR(255),
+  `photo_url` VARCHAR(500),
   `missing_datetime` DATETIME NOT NULL,
   `missing_location` VARCHAR(255) NOT NULL,
   `detail_description` TEXT,
