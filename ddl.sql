@@ -184,24 +184,24 @@ CREATE TABLE vet_appointments (
   FOREIGN KEY (pet_id) REFERENCES pet(id)
 );
 
---12. 수의사 테이블
 CREATE TABLE `vet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `license_number` varchar(50) DEFAULT NULL,         -- 수의사 면허번호
-  `license_image_url` varchar(500) DEFAULT NULL,     -- 면허증 사진 URL
-  `hospital_name` varchar(100) DEFAULT NULL,         -- 소속 병원명
-  `name` varchar(100) DEFAULT NULL,                  -- 수의사 이름
-  `career` varchar(255) DEFAULT NULL,                -- 수의사 경력 (예: 대학교 병원 근무)
-  `has_certificate` TINYINT(1) DEFAULT 0,            -- 수의사 자격증 보유 여부 (0: 없음, 1: 있음)
-  `introduction` text DEFAULT NULL,                  -- 수의사 소개
-  `specialties` varchar(255) DEFAULT NULL,           -- 수의사 진료분야
-  `hospital_location` varchar(255) DEFAULT NULL,     -- 수의사 병원 위치
+  `name` varchar(100) DEFAULT NULL,
+  `has_certificate` tinyint(1) DEFAULT 0,
+  `license_number` varchar(50) DEFAULT NULL,
+  `license_image_url` varchar(500) DEFAULT NULL,
+  `hospital_id` int(10) unsigned DEFAULT NULL,
+  `career` varchar(255) DEFAULT NULL,
+  `introduction` text DEFAULT NULL,
+  `specialties` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  UNIQUE KEY `email` (`login_id`),
+  KEY `fk_vet_hospital` (`hospital_id`),
+  CONSTRAINT `fk_vet_hospital` FOREIGN KEY (`hospital_id`) REFERENCES `animal_hospitals` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
