@@ -184,6 +184,7 @@ CREATE TABLE vet_appointments (
   FOREIGN KEY (pet_id) REFERENCES pet(id)
 );
 
+--12. 수의사 테이블
 CREATE TABLE `vet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
