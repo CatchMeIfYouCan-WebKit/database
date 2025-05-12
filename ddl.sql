@@ -167,22 +167,27 @@ CREATE TABLE chat_messages (
   FOREIGN KEY (sender_id) REFERENCES users(id)
 );
 --11. 진료 예약 정보 테이블
-CREATE TABLE vet_appointments (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,                  -- 보호자
-  vet_user_id INT NOT NULL,               -- 수의사
-  pet_id INT NOT NULL,                    -- 반려동물
-  visit_count INT DEFAULT 0,              -- 방문 횟수 (0: 처음, 1 이상: 방문 횟수)
-  appointment_time DATETIME NOT NULL,     -- 예약 시간
-  is_in_person TINYINT(1) DEFAULT 1,      -- 대면 여부 (1: 대면, 0: 비대면)
-  purpose VARCHAR(255) DEFAULT NULL,      -- 방문 목적
-  status ENUM('WAITING', 'RESERVED', 'CANCELLED', 'COMPLETED') DEFAULT 'WAITING', -- 상태
-  vet_opinion TEXT DEFAULT NULL,          -- 수의사 의견
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (vet_user_id) REFERENCES users(id),
-  FOREIGN KEY (pet_id) REFERENCES pet(id)
-);
+CREATE TABLE `vet_appointments` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `vet_id` INT(11) NOT NULL,
+  `pet_id` INT(11) NOT NULL,
+  `visit_count` INT(11) DEFAULT 0,
+  `appointment_time` DATETIME NOT NULL,
+  `is_in_person` TINYINT(1) DEFAULT 1, -- 대면 여부(1: 대면, 0: 비대면)
+  `purpose` VARCHAR(255) DEFAULT NULL,
+  `status` ENUM('WAITING', 'RESERVED', 'CANCELLED', 'COMPLETED') DEFAULT 'WAITING',
+  `vet_opinion` TEXT DEFAULT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `vet_id` (`vet_id`),
+  KEY `pet_id` (`pet_id`),
+  CONSTRAINT `vet_appointments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `vet_appointments_ibfk_2` FOREIGN KEY (`vet_id`) REFERENCES `vet` (`id`),
+  CONSTRAINT `vet_appointments_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --12. 수의사 테이블
 CREATE TABLE `vet` (
