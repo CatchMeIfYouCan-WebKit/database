@@ -112,6 +112,7 @@ CREATE TABLE `adopt_posts` (
   `is_vet_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `comments` TEXT,
   `adopt_location` VARCHAR(255) NOT NULL, -- 입양 지역
+  `adopt_status` ENUM('분양중', '예약중', '분양완료') NOT NULL -- 게시글 상태
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
