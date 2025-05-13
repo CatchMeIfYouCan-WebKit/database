@@ -197,7 +197,7 @@ CREATE TABLE `vet` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `name` varchar(100) DEFAULT NULL,
-  `has_certificate` tinyint(1) DEFAULT 0,
+  `certificate` varchar(255) DEFAULT NULL,
   `license_number` varchar(50) DEFAULT NULL,
   `license_image_url` varchar(500) DEFAULT NULL,
   `hospital_id` int(10) unsigned DEFAULT NULL,
@@ -210,5 +210,5 @@ CREATE TABLE `vet` (
   UNIQUE KEY `email` (`login_id`),
   KEY `fk_vet_hospital` (`hospital_id`),
   CONSTRAINT `fk_vet_hospital` FOREIGN KEY (`hospital_id`) REFERENCES `animal_hospitals` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
