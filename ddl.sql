@@ -107,16 +107,29 @@ CREATE TABLE `missing_posts` (
 CREATE TABLE `adopt_posts` (
   `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
-  `pet_id` INT NOT NULL,
+  `pet_id` INT DEFAULT NULL,
+  
+  -- 직접입력 정보 (NULL 허용)
+  `photo_path` VARCHAR(500),
+  `name` VARCHAR(50),
+  `breed` VARCHAR(50),
+  `coat_color` VARCHAR(50),
+  `gender` VARCHAR(10),
+  `is_neutered` TINYINT(1) DEFAULT 0,
+  `date_of_birth` DATE,
+  `age` INT,
+  `weight` DECIMAL(5,2),
+  `registration_number` VARCHAR(100) DEFAULT NULL,
+
   `title` VARCHAR(200) NOT NULL,
   `is_vet_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `comments` TEXT,
-  `adopt_location` VARCHAR(255) NOT NULL, -- 입양 지역
-  `adopt_status` ENUM('분양중', '분양완료') NOT NULL DEFAULT '분양중', -- 게시글 상태
+  `adopt_location` VARCHAR(255) NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-  FOREIGN KEY (`pet_id`) REFERENCES `pet`(`id`)
+  FOREIGN KEY (`pet_id`) REFERENCES `pet`(`id`) ON DELETE SET NULL
 );
 
 -- 7. animal_hospitals (동물병원 정보)
@@ -147,14 +160,14 @@ CREATE TABLE `missing_post_comments` (
 --9. 채팅방 정보 테이블
 CREATE TABLE chat_rooms (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  user1_id INT NOT NULL,  -- 채팅 참여자 A
-  user2_id INT NOT NULL,  -- 채팅 참여자 B
-  type ENUM('ADOPTION', 'VET') NOT NULL,  -- 채팅 용도
-  related_id BIGINT NOT NULL,  -- ADOPTION: adopt_posts.id / VET: vet_appointments.id
+  sender_id INT NOT NULL,      -- 채팅 시작한 사람 (입양 신청자)
+  receiver_id INT NOT NULL,    -- 입양 글 작성자
+  adopt_post_id BIGINT NOT NULL,  -- 입양 게시글 ID
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY unique_chat (user1_id, user2_id, type, related_id),
-  FOREIGN KEY (user1_id) REFERENCES users(id),
-  FOREIGN KEY (user2_id) REFERENCES users(id)
+  UNIQUE KEY unique_chat (sender_id, receiver_id, adopt_post_id),
+  FOREIGN KEY (sender_id) REFERENCES users(id),
+  FOREIGN KEY (receiver_id) REFERENCES users(id),
+  FOREIGN KEY (adopt_post_id) REFERENCES adopt_posts(id)
 );
 
 --10. 채팅 메세지 저장 테이블 
