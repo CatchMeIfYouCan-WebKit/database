@@ -11,8 +11,8 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`login_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 2. shelter_animal_announcements (보호소 실종동물 공고)
-CREATE TABLE `shelter_animal_announcements` (
+-- 2. shelter_missing_animals (보호소 실종동물 공고)
+CREATE TABLE `shelter_missing_animals` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '식별자',
   `announcement_no` varchar(50) NOT NULL COMMENT '공고번호',
   `animal_type` varchar(20) NOT NULL COMMENT '동물종류',
