@@ -110,26 +110,25 @@ CREATE TABLE `adopt_posts` (
   `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
   `pet_id` INT DEFAULT NULL,
-  
-  -- 직접입력 정보 (NULL 허용)
   `photo_path` VARCHAR(500),
   `name` VARCHAR(50),
   `breed` VARCHAR(50),
-  `coat_color` VARCHAR(50),
+  `coat_color` VARCHAR(100),          
   `gender` VARCHAR(10),
   `is_neutered` TINYINT(1) DEFAULT 0,
   `date_of_birth` DATE,
   `age` INT,
   `weight` DECIMAL(5,2),
   `registration_number` VARCHAR(100) DEFAULT NULL,
-
   `title` VARCHAR(200) NOT NULL,
   `is_vet_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `comments` TEXT,
-  `adopt_location` VARCHAR(255) NOT NULL,
+  `adopt_location` VARCHAR(255) NOT NULL,  
+  `latitude` DECIMAL(10, 6),              
+  `longitude` DECIMAL(10, 6),              
+  `status` ENUM('분양중', '분양완료') DEFAULT '분양중',  
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
   FOREIGN KEY (`pet_id`) REFERENCES `pet`(`id`) ON DELETE SET NULL
 );
