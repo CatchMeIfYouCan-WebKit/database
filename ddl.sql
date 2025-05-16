@@ -230,3 +230,25 @@ CREATE TABLE `vet` (
   CONSTRAINT `fk_vet_hospital` FOREIGN KEY (`hospital_id`) REFERENCES `animal_hospitals` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--13. ai 예측 테이블
+CREATE TABLE ai_predictions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    post_type VARCHAR(20) NOT NULL, -- 'missing' 또는 'witness'
+    post_id BIGINT NOT NULL,        -- 실제 게시글의 id
+    pet_id BIGINT,
+    predicted_breed VARCHAR(50),
+    predicted_color VARCHAR(50),
+    breed_score FLOAT,
+    color_score FLOAT,
+    model_version VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- ✅ 복잡한 FK 대신 설명용 인덱스만 추가
+    INDEX idx_post_type_id (post_type, post_id),
+
+    -- ✅ missing_posts.id만 FK로 연결 (witness_posts는 별도 처리 필요)
+    CONSTRAINT fk_ai_predictions_post
+        FOREIGN KEY (post_id)
+        REFERENCES missing_posts(id)
+        ON DELETE CASCADE
+);
