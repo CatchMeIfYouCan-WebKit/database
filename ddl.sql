@@ -98,6 +98,8 @@ CREATE TABLE `missing_posts` (
   `photo_url` VARCHAR(500),
   `missing_datetime` DATETIME NOT NULL,
   `missing_location` VARCHAR(255) NOT NULL,
+  `latitude` DOUBLE,     
+  `longitude` DOUBLE,     
   `detail_description` TEXT,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
