@@ -166,27 +166,32 @@ CREATE TABLE `missing_post_comments` (
 
 --9. 채팅방 정보 테이블
 CREATE TABLE chat_rooms (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  sender_id INT NOT NULL,      -- 채팅 시작한 사람 (입양 신청자)
-  receiver_id INT NOT NULL,    -- 입양 글 작성자
-  adopt_post_id BIGINT NOT NULL,  -- 입양 게시글 ID
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY unique_chat (sender_id, receiver_id, adopt_post_id),
-  FOREIGN KEY (sender_id) REFERENCES users(id),
-  FOREIGN KEY (receiver_id) REFERENCES users(id),
-  FOREIGN KEY (adopt_post_id) REFERENCES adopt_posts(id)
-);
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  user1_id int(11) NOT NULL,
+  user2_id int(11) NOT NULL,
+  type enum('ADOPTION','VET') NOT NULL,
+  related_id bigint(20) NOT NULL,
+  created_at datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (id),
+  UNIQUE KEY unique_chat (user1_id,user2_id,type,related_id),
+  KEY user2_id (user2_id),
+  CONSTRAINT chat_rooms_ibfk_1 FOREIGN KEY (user1_id) REFERENCES users (id),
+  CONSTRAINT chat_rooms_ibfk_2 FOREIGN KEY (user2_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --10. 채팅 메세지 저장 테이블 
 CREATE TABLE chat_messages (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  room_id BIGINT NOT NULL,
-  sender_id INT NOT NULL,
-  message TEXT NOT NULL,
-  sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (room_id) REFERENCES chat_rooms(id),
-  FOREIGN KEY (sender_id) REFERENCES users(id)
-);
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  room_id bigint(20) NOT NULL,
+  sender_id int(11) NOT NULL,
+  message text NOT NULL,
+  sent_at datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (id),
+  KEY room_id (room_id),
+  KEY sender_id (sender_id),
+  CONSTRAINT chat_messages_ibfk_1 FOREIGN KEY (room_id) REFERENCES chat_rooms (id),
+  CONSTRAINT chat_messages_ibfk_2 FOREIGN KEY (sender_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 --11. 진료 예약 정보 테이블
 CREATE TABLE `vet_appointments` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
