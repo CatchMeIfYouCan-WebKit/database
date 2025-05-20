@@ -192,52 +192,8 @@ CREATE TABLE chat_messages (
   CONSTRAINT chat_messages_ibfk_1 FOREIGN KEY (room_id) REFERENCES chat_rooms (id),
   CONSTRAINT chat_messages_ibfk_2 FOREIGN KEY (sender_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
---11. 진료 예약 정보 테이블
-CREATE TABLE `vet_appointments` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
-  `vet_id` INT(11) NOT NULL,
-  `pet_id` INT(11) NOT NULL,
-  `visit_count` INT(11) DEFAULT 0,
-  `appointment_time` DATETIME NOT NULL,
-  `is_in_person` TINYINT(1) DEFAULT 1, -- 대면 여부(1: 대면, 0: 비대면)
-  `purpose` VARCHAR(255) DEFAULT NULL,
-  `status` ENUM('WAITING', 'RESERVED', 'CANCELLED', 'COMPLETED') DEFAULT 'WAITING',
-  `vet_opinion` TEXT DEFAULT NULL,
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP(),
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `vet_id` (`vet_id`),
-  KEY `pet_id` (`pet_id`),
-  CONSTRAINT `vet_appointments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `vet_appointments_ibfk_2` FOREIGN KEY (`vet_id`) REFERENCES `vet` (`id`),
-  CONSTRAINT `vet_appointments_ibfk_3` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
---12. 수의사 테이블
-CREATE TABLE `vet` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci NOT NULL DEFAULT '',
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `name` varchar(100) DEFAULT NULL,
-  `certificate` varchar(255) DEFAULT NULL,
-  `license_number` varchar(50) DEFAULT NULL,
-  `license_image_url` varchar(500) DEFAULT NULL,
-  `hospital_id` int(10) unsigned DEFAULT NULL,
-  `career` varchar(255) DEFAULT NULL,
-  `introduction` text DEFAULT NULL,
-  `specialties` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`login_id`),
-  KEY `fk_vet_hospital` (`hospital_id`),
-  CONSTRAINT `fk_vet_hospital` FOREIGN KEY (`hospital_id`) REFERENCES `animal_hospitals` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---13. ai 예측 테이블
+--11. ai 예측 테이블
 CREATE TABLE ai_predictions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     post_type VARCHAR(20) NOT NULL, -- 'missing' 또는 'witness'
